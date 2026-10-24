@@ -1,0 +1,127 @@
+中：
+
+
+证明：在棱长为1的立方体内（含边界）任意放置5个点，由其中任意4个点形成的5个四面体中，最小体积不超过1/6。并且题目给出的五点坐标确实能达到1/6。
+
+一、两个基本引理
+
+引理1：立方体内任意4个点构成的四面体体积不超过1/3。
+
+设四点为 A, B, C, D。四面体体积为 V = (1/6) |det(B-A, C-A, D-A)|。
+
+固定 B, C, D，把 A 看成变量，体积是 A 的凸函数（仿射函数的绝对值取正部分）。凸函数在立方体上的最大值必在某个顶点处取得，因此可把 A 换成立方体的一个顶点，使体积不减小。
+
+同理，依次把 B, C, D 也换成立方体的顶点，体积仍不会减小。所以最大体积只需在立方体的8个顶点中任取4个点来检查。
+
+8个顶点中任取4点，若不共面，体积最大为1/3。例如顶点 (0,0,0), (1,1,0), (1,0,1), (0,1,1) 形成的四面体体积为 |det [[1,1,0],[1,0,1],[0,1,1]]| / 6 = 2/6 = 1/3。
+
+所以任意4点构成的四面体体积 V <= 1/3。
+
+引理2：立方体内任意5个点的凸包体积不超过1/2。
+
+类似地，固定其中4个点，凸包体积作为第5个点的函数也是凸函数，因此最大值仍在立方体顶点处取得。于是只需检查从8个顶点中任选5个顶点的凸包体积。
+
+通过对称性枚举可知，最大凸包体积为1/2。达到该值的例子正是题目给出的五个点（或其对称形式）： (0,0,0), (1,1,1), (0,1,0), (1,0,0), (0,0,1)。 其凸包是一个三角双锥，体积为 1/6 + 1/3 = 1/2。
+
+所以任意5个点的凸包体积 V_conv <= 1/2。
+
+二、主要证明
+
+设五个点为 A, B, C, D, E。记五个四面体体积分别为 V1, V2, V3, V4, V5，并记 m = min{V1, V2, V3, V4, V5}。 我们要证明 m <= 1/6。
+
+若存在四点共面，则对应的四面体体积为0，显然 m = 0 <= 1/6。 因此下面设任意四点不共面。
+
+情况一：某点在其余四点的四面体内部。
+
+不妨设 E 在四面体 ABCD 内部。记四面体 ABCD 体积为 V0。由引理1，V0 <= 1/3。
+
+点 E 将四面体 ABCD 分成4个小四面体： EBCD, AECD, ABED, ABCE。 它们的体积都至少为 m，因此 V0 >= 4m。 于是 4m <= V0 <= 1/3， 所以 m <= 1/12 < 1/6。 此时结论成立。
+
+情况二：所有五个点都是凸包顶点。
+
+此时凸包是三角双锥（五个顶点、六个三角形面）。设其底面为三角形 ABC，两个顶尖为 D, E（分别在底面两侧）。两个大四面体 DABC 与 EABC 的体积分别记为 VD, VE。凸包体积 V_conv = VD + VE。
+
+由引理2，V_conv <= 1/2。
+
+再考虑三个“横跨”四面体： ABDE, ACDE, BCDE。 这三个四面体两两只共享面，并且它们的并集严格包含于凸包内（缺少底面三角形 ABC 内部附近区域），所以它们的体积之和小于或等于凸包体积： V(ABDE) + V(ACDE) + V(BCDE) <= V_conv。
+
+而每一个横跨四面体的体积都至少为 m，因此 3m <= V(ABDE) + V(ACDE) + V(BCDE) <= V_conv <= 1/2。 于是 3m <= 1/2， 即 m <= 1/6。
+
+两种情况都得到 m <= 1/6。
+
+三、达到1/6的例子
+
+取五点： A = (0,0,0), B = (1,1,1), C = (0,1,0), D = (1,0,0), E = (0,0,1)。
+
+计算五个四面体体积：
+
+不含 A：B, C, D, E，体积 = 1/3； 不含 B：A, C, D, E，体积 = 1/6； 不含 C：A, B, D, E，体积 = 1/6； 不含 D：A, B, C, E，体积 = 1/6； 不含 E：A, B, C, D，体积 = 1/6。
+
+所以最小体积为1/6。
+
+因此上界1/6是可达的。
+
+综上，单位立方体内任意5个点形成的5个四面体中的最小体积不会超过1/6，且给出的五点确实达到该值。
+
+
+English:
+
+
+Proof: In a unit cube (including its boundary), for any 5 points placed inside it, the minimum volume among the 5 tetrahedra formed by any 4 of the points is at most 1/6. Moreover, the given five points attain this bound.
+
+Two basic lemmas
+Lemma 1: The volume of any tetrahedron formed by 4 points inside a unit cube is at most 1/3.
+
+Let the four points be A, B, C, D. The tetrahedron volume is V = (1/6) |det(B-A, C-A, D-A)|.
+
+Fixing B, C, D and regarding A as a variable, the volume is a convex function of A (the absolute value of an affine function). A convex function on a cube attains its maximum at some vertex, so we can replace A by a vertex of the cube without decreasing the volume.
+
+Similarly, we can replace B, C, D by vertices of the cube one by one without decreasing the volume. Therefore, the maximum volume need only be checked among choices of 4 points from the 8 vertices of the cube.
+
+Among any 4 vertices of the cube, if they are coplanar the volume is 0; if not, the maximum volume is 1/3. For example, the vertices (0,0,0), (1,1,0), (1,0,1), (0,1,1) give a tetrahedron of volume |det [[1,1,0],[1,0,1],[0,1,1]]| / 6 = 2/6 = 1/3.
+
+Thus any tetrahedron formed by 4 points in the unit cube has volume V <= 1/3.
+
+Lemma 2: The volume of the convex hull of any 5 points inside a unit cube is at most 1/2.
+
+Similarly, fixing 4 points and regarding the convex hull volume as a function of the fifth point, this function is convex, so its maximum over the cube is attained at a vertex. Therefore it suffices to check the convex hull volume of any 5 vertices chosen from the 8 vertices of the cube.
+
+By symmetry enumeration, the maximum convex hull volume is 1/2. This value is attained by the five points given in the problem (or symmetric versions): (0,0,0), (1,1,1), (0,1,0), (1,0,0), (0,0,1). Their convex hull is a triangular bipyramid with volume 1/6 + 1/3 = 1/2.
+
+Thus for any 5 points in the unit cube, the convex hull volume satisfies V_conv <= 1/2.
+
+Main proof
+Let the five points be A, B, C, D, E. Denote the volumes of the five tetrahedra by V1, V2, V3, V4, V5, and set m = min{V1, V2, V3, V4, V5}. We need to prove m <= 1/6.
+
+If some four points are coplanar, then the corresponding tetrahedron has volume 0, so clearly m = 0 <= 1/6. Hence we may assume no four points are coplanar.
+
+Case 1: One point lies inside the tetrahedron formed by the other four.
+
+Assume E lies inside tetrahedron ABCD. Let V0 be the volume of tetrahedron ABCD. By Lemma 1, V0 <= 1/3.
+
+The point E divides tetrahedron ABCD into four smaller tetrahedra: EBCD, AECD, ABED, ABCE. Each of these has volume at least m, so V0 >= 4m. Thus 4m <= V0 <= 1/3, so m <= 1/12 < 1/6. The conclusion holds in this case.
+
+Case 2: All five points are vertices of their convex hull.
+
+Then the convex hull is a triangular bipyramid (five vertices, six triangular faces). Let ABC be its base triangle, and let D and E be the two apexes on opposite sides of the base. Denote the volumes of the two large tetrahedra DABC and EABC by VD and VE. The convex hull volume is V_conv = VD + VE.
+
+By Lemma 2, V_conv <= 1/2.
+
+Now consider the three "cross" tetrahedra: ABDE, ACDE, BCDE. These three tetrahedra share faces pairwise, and their union is strictly contained in the convex hull (it misses a region near the interior of the base triangle ABC), so the sum of their volumes is at most the convex hull volume: V(ABDE) + V(ACDE) + V(BCDE) <= V_conv.
+
+Each of these cross tetrahedra has volume at least m, so 3m <= V(ABDE) + V(ACDE) + V(BCDE) <= V_conv <= 1/2. Therefore 3m <= 1/2, i.e., m <= 1/6.
+
+In both cases we obtain m <= 1/6.
+
+Example attaining 1/6
+Take the five points: A = (0,0,0), B = (1,1,1), C = (0,1,0), D = (1,0,0), E = (0,0,1).
+
+Compute the volumes of the five tetrahedra:
+
+Without A: B, C, D, E, volume = 1/3; Without B: A, C, D, E, volume = 1/6; Without C: A, B, D, E, volume = 1/6; Without D: A, B, C, E, volume = 1/6; Without E: A, B, C, D, volume = 1/6.
+
+Thus the minimum volume is 1/6.
+
+Therefore the upper bound 1/6 is attained.
+
+In conclusion, among any 5 points placed inside a unit cube, the minimum volume of the tetrahedra formed by any 4 of the points is at most 1/6, and the given coordinates indeed achieve this bound.
